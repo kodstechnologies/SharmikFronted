@@ -1,16 +1,18 @@
 import { lazy } from 'react';
-const Index = lazy(() => import('../pages/Pages/Dashboard/Index'));
+const Index = lazy(() => import('../pages/Apps/Admin/Dashboard/Index'));
 const Analytics = lazy(() => import('../pages/Analytics'));
 const Finance = lazy(() => import('../pages/Finance'));
 const Crypto = lazy(() => import('../pages/Crypto'));
-const CoinPricing = lazy(() => import('../pages/Pages/CoinPricing/CoinPricing'));
-const Specializations = lazy(() => import('../pages/specialization/Specializations'));
-const QuestionSets = lazy(() => import('../pages/Pages/QuestionSets/QuestionSets'));
-const QuestionSetBuilder = lazy(() => import('../pages/Pages/QuestionSets/QuestionSetBuilder'));
-const Feedback = lazy(() => import('../pages/Pages/Feedback/Feedback'));
-const EmailMarketing = lazy(() => import('../pages/Pages/EmailMarketing/EmailMarketing'));
-const JobSeeker = lazy(() => import('../pages/Pages/JobSeeker/JobSeeker'));
-const Recruiter = lazy(() => import('../pages/Pages/Recruiter/Recruiter'));
+const CoinPricing = lazy(() => import('../pages/Apps/Admin/CoinPricing/CoinPricing'));
+const Specializations = lazy(() => import('../pages/Apps/Admin/specialization/Specializations'));
+const CreateSpecialization = lazy(() => import('../pages/Apps/Admin/specialization/CreateSpecialization'));
+const EditSpecialization = lazy(() => import('../pages/Apps/Admin/specialization/EditSpecialization'));
+const QuestionSets = lazy(() => import('../pages/Apps/Admin/QuestionSets/QuestionSets'));
+const QuestionSetBuilder = lazy(() => import('../pages/Apps/Admin/QuestionSets/QuestionSetBuilder'));
+const Feedback = lazy(() => import('../pages/Apps/Admin/Feedback/Feedback'));
+const EmailMarketing = lazy(() => import('../pages/Apps/Admin/EmailMarketing/EmailMarketing'));
+const JobSeeker = lazy(() => import('../pages/Apps/Admin/JobSeeker/JobSeeker'));
+const Recruiter = lazy(() => import('../pages/Apps/Admin/Recruiter/Recruiter'));
 const Todolist = lazy(() => import('../pages/Apps/Todolist'));
 const Mailbox = lazy(() => import('../pages/Apps/Mailbox'));
 const Notes = lazy(() => import('../pages/Apps/Notes'));
@@ -142,11 +144,23 @@ const routes = [
         element: <Specializations />,
     },
     {
+        path: '/specializations/create',
+        element: <CreateSpecialization />,
+    },
+    {
+        path: '/specializations/:id/edit',
+        element: <EditSpecialization />,
+    },
+    {
         path: '/question-sets',
         element: <QuestionSets />,
     },
     {
         path: '/question-sets/new',
+        element: <QuestionSetBuilder />,
+    },
+    {
+        path: '/question-sets/:id/edit',
         element: <QuestionSetBuilder />,
     },
     {
@@ -471,11 +485,11 @@ const routes = [
     //     layout: 'blank',
     // },
     // //Authentication
-    // {
-    //     path: '/auth/boxed-signin',
-    //     element: <LoginBoxed />,
-    //     layout: 'blank',
-    // },
+    {
+        path: '/auth/boxed-signin',
+        element: <LoginBoxed />,
+        layout: 'blank',
+    },
     // {
     //     path: '/auth/boxed-signup',
     //     element: <RegisterBoxed />,
@@ -491,11 +505,11 @@ const routes = [
     //     element: <RecoverIdBoxed />,
     //     layout: 'blank',
     // },
-    // {
-    //     path: '/auth/cover-login',
-    //     element: <LoginCover />,
-    //     layout: 'blank',
-    // },
+    {
+        path: '/auth/cover-login',
+        element: <LoginCover />,
+        layout: 'blank',
+    },
     // {
     //     path: '/auth/cover-register',
     //     element: <RegisterCover />,

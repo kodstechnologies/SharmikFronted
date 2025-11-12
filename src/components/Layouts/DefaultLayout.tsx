@@ -1,4 +1,5 @@
 import { PropsWithChildren, Suspense, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import App from '../../App';
 import { IRootState } from '../../store';
@@ -12,6 +13,8 @@ import Portals from '../../components/Portals';
 const DefaultLayout = ({ children }: PropsWithChildren) => {
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const [showLoader, setShowLoader] = useState(true);
     const [showTopButton, setShowTopButton] = useState(false);
@@ -28,6 +31,13 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
             setShowTopButton(false);
         }
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+            navigate('/auth/boxed-signin', { replace: true });
+        }
+    }, [location.pathname, navigate]);
 
     useEffect(() => {
         window.addEventListener('scroll', onScrollHandler);

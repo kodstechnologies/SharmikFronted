@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setPageTitle } from '../../../store/themeConfigSlice';
+import { setPageTitle } from '../../../../store/themeConfigSlice';
 
 const jobSummary = [
     { label: 'Active Profiles', value: '12,845', helper: '+560 this week' },
@@ -16,6 +16,7 @@ const jobSeekers = [
         availability: 'Immediate',
         lastActive: '2024-07-30',
         status: 'Interviewing',
+        category: 'ND',
     },
     {
         name: 'Rahul Mishra',
@@ -23,6 +24,7 @@ const jobSeekers = [
         availability: '2 Weeks',
         lastActive: '2024-07-29',
         status: 'Offer Extended',
+        category: 'ITI',
     },
     {
         name: 'Swati Gupta',
@@ -30,6 +32,7 @@ const jobSeekers = [
         availability: 'Immediate',
         lastActive: '2024-07-28',
         status: 'Profile Review',
+        category: 'Diploma',
     },
     {
         name: 'Karan Singh',
@@ -37,6 +40,7 @@ const jobSeekers = [
         availability: 'Notice Period',
         lastActive: '2024-07-27',
         status: 'Interviewing',
+        category: 'ND',
     },
     {
         name: 'Heena Sharma',
@@ -44,6 +48,7 @@ const jobSeekers = [
         availability: 'Immediate',
         lastActive: '2024-07-26',
         status: 'Shortlisted',
+        category: 'Diploma',
     },
 ];
 
@@ -56,12 +61,20 @@ const statusStyles: Record<string, string> = {
 
 const JobSeeker = () => {
     const dispatch = useDispatch();
+    const [selectedCategory, setSelectedCategory] = useState<'All' | 'ND' | 'ITI' | 'Diploma'>('All');
 
     useEffect(() => {
         dispatch(setPageTitle('Job Seekers'));
     }, [dispatch]);
 
     const cards = useMemo(() => jobSummary, []);
+
+    const filteredJobSeekers = useMemo(() => {
+        if (selectedCategory === 'All') {
+            return jobSeekers;
+        }
+        return jobSeekers.filter((seeker) => seeker.category === selectedCategory);
+    }, [selectedCategory]);
 
     return (
         <div className="space-y-8">
@@ -91,6 +104,19 @@ const JobSeeker = () => {
                         <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Top Job Seekers</h2>
                         <p className="text-sm text-slate-500 dark:text-slate-400">High-intent candidates ready for immediate action.</p>
                     </div>
+                    <div className="flex items-center gap-3">
+                        <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Filter by category:</span>
+                        <select
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value as 'All' | 'ND' | 'ITI' | 'Diploma')}
+                            className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600 shadow-sm transition focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                        >
+                            <option value="All">All</option>
+                            <option value="ND">ND (Non-Degree)</option>
+                            <option value="ITI">ITI (Industrial Training Institute)</option>
+                            <option value="Diploma">Diploma</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
@@ -106,7 +132,7 @@ const JobSeeker = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200 bg-white text-sm dark:divide-slate-700 dark:bg-slate-900">
-                                {jobSeekers.map((seeker) => (
+                                {filteredJobSeekers.map((seeker) => (
                                     <tr key={seeker.name} className="text-slate-700 transition hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800/70">
                                         <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">{seeker.name}</td>
                                         <td className="px-6 py-4 text-slate-500 dark:text-slate-300">{seeker.specialization}</td>

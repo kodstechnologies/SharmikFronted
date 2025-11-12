@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { setPageTitle } from '../../../store/themeConfigSlice';
+import { setPageTitle } from '../../../../store/themeConfigSlice';
 
 const recruiterSummary = [
     { label: 'Active Recruiters', value: '860', helper: '+45 onboarded this month' },

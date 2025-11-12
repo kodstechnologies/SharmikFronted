@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { IRootState } from '../../store';
 import { toggleRTL, toggleTheme, toggleSidebar } from '../../store/themeConfigSlice';
 import { useTranslation } from 'react-i18next';
@@ -35,6 +35,7 @@ import IconMenuMore from '../Icon/Menu/IconMenuMore';
 
 const Header = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     useEffect(() => {
         const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]');
         if (selector) {
@@ -135,6 +136,21 @@ const Header = () => {
         }
     };
     const [flag, setFlag] = useState(themeConfig.locale);
+
+    const authUser = (() => {
+        try {
+            const stored = localStorage.getItem('authUser');
+            return stored ? JSON.parse(stored) : null;
+        } catch (error) {
+            return null;
+        }
+    })();
+
+    const handleSignOut = () => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('authUser');
+        navigate('/auth/boxed-signin', { replace: true });
+    };
 
     const { t } = useTranslation();
 
@@ -435,11 +451,13 @@ const Header = () => {
                                             <img className="rounded-md w-10 h-10 object-cover" src="/assets/images/user-profile.jpeg" alt="userProfile" />
                                             <div className="ltr:pl-4 rtl:pr-4 truncate">
                                                 <h4 className="text-base">
-                                                    John Doe
-                                                    <span className="text-xs bg-success-light rounded text-success px-1 ltr:ml-2 rtl:ml-2">Pro</span>
+                                                    {authUser?.name || 'User'}
+                                                    {authUser?.role && (
+                                                        <span className="text-xs bg-success-light rounded text-success px-1 ltr:ml-2 rtl:ml-2">{authUser.role}</span>
+                                                    )}
                                                 </h4>
                                                 <button type="button" className="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white">
-                                                    johndoe@gmail.com
+                                                    {authUser?.email || 'user@example.com'}
                                                 </button>
                                             </div>
                                         </div>
@@ -463,10 +481,10 @@ const Header = () => {
                                         </Link>
                                     </li>
                                     <li className="border-t border-white-light dark:border-white-light/10">
-                                        <Link to="/auth/boxed-signin" className="text-danger !py-3">
-                                            <IconLogout className="w-4.5 h-4.5 ltr:mr-2 rtl:ml-2 rotate-90 shrink-0" />
+                                        <button type="button" onClick={handleSignOut} className="flex w-full items-center gap-2 text-danger !py-3 px-4 hover:bg-red-50/60 dark:hover:bg-danger/10">
+                                            <IconLogout className="w-4.5 h-4.5 rotate-90 shrink-0" />
                                             Sign Out
-                                        </Link>
+                                        </button>
                                     </li>
                                 </ul>
                             </Dropdown>

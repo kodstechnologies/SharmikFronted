@@ -84,7 +84,7 @@ const Sidebar = () => {
                             <img className="w-8 ml-[5px] flex-none" src="/assets/images/logo.svg" alt="logo" />
                             <div className="ltr:ml-3 rtl:mr-3 flex flex-col">
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-indigo-500 to-sky-400 text-lg font-extrabold uppercase tracking-[0.4em] leading-tight drop-shadow-sm">
-                                    SHARMIK
+                                    SHRAMIK
                                 </span>
                                 <span className="mt-1 hidden text-[9px] font-semibold uppercase tracking-[0.5em] text-slate-400/90 dark:text-slate-500 xl:inline">
                                     Empowering Talent

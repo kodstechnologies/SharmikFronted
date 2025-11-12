@@ -1,12 +1,12 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { setPageTitle } from '../../../store/themeConfigSlice';
-import IconArrowForward from '../../../components/Icon/IconArrowForward';
-import IconSettings from '../../../components/Icon/IconSettings';
-import IconInbox from '../../../components/Icon/IconInbox';
-import IconMessageDots from '../../../components/Icon/IconMessageDots';
-import IconLoader from '../../../components/Icon/IconLoader';
-import IconChecks from '../../../components/Icon/IconChecks';
+import { setPageTitle } from '../../../../store/themeConfigSlice';
+import IconArrowForward from '../../../../components/Icon/IconArrowForward';
+import IconSettings from '../../../../components/Icon/IconSettings';
+import IconInbox from '../../../../components/Icon/IconInbox';
+import IconMessageDots from '../../../../components/Icon/IconMessageDots';
+import IconLoader from '../../../../components/Icon/IconLoader';
+import IconChecks from '../../../../components/Icon/IconChecks';
 
 type FeedbackItem = {
     user: string;
